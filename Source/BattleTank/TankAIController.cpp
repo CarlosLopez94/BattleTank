@@ -37,7 +37,7 @@ Returns the tank controlled by the player
 ATank* ATankAIController::GetPlayerTank() const {
 	APlayerController* playerController = GetWorld()->GetFirstPlayerController();
 	if (playerController != nullptr && playerController->GetPawn() != nullptr) {
-		return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		return Cast<ATank>(playerController->GetPawn());
 	} else {
 		return nullptr;
 	}
@@ -45,5 +45,13 @@ ATank* ATankAIController::GetPlayerTank() const {
 
 /*Moves the barrel to the position where the crosshair intersecs*/
 void ATankAIController::AimTowardsCrosshair() {
+	ATank* controlledTank = GetPlayerTank();
+	if (controlledTank!=nullptr) {
+		///Get aim location
+		FVector aimLocation = controlledTank->GetActorLocation();
 
+		///delegate to the tank
+		UE_LOG(LogTemp, Warning, TEXT("TankAIController %s"), *controlledTank->GetName());
+		controlledTank->AimAt(aimLocation);
+	}
 }

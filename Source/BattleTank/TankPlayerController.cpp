@@ -29,18 +29,18 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 
 void ATankPlayerController::AimTowardsCrosshair() {
-	//Calculate crosshair
-	FVector hitLocation;
-	GetSightRayHitLocation(hitLocation);
-
-	//calculate crosshair position in world
-
-	//calculate rotation
-
-	//rotate barrel
+	ATank* controlledTank = GetControlledTank();
+	if (controlledTank!=nullptr) {
+		//Calculate crosshair
+		FVector hitLocation;
+		bool success = GetSightRayHitLocation(hitLocation);
+		if (success) {
+			controlledTank->AimAt(hitLocation);
+		}
+	}
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const {
+bool ATankPlayerController::GetSightRayHitLocation(FVector& vectorHitLocation) const {
 	///Find the crosshair position 
 	int32 viewportSizeX;
 	int32 viewportSizeY;
@@ -50,16 +50,16 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) cons
 	///Deproject crosshairPosition
 	FVector lookDirection;
 	bool lookSuccess = GetLookDirection(crosshairScreenLocation, lookDirection);
+	bool hitSuccess = false;
 	if (lookSuccess) {
 		FHitResult hitResult;
-		GetLookVectorHitLocation(lookDirection, hitResult);
-		UE_LOG(LogTemp, Warning, TEXT("hitLocation: %s"), *hitResult.Location.ToString());
+		hitSuccess = GetLookVectorHitLocation(lookDirection, hitResult);
+		if (hitSuccess) {
+			vectorHitLocation = hitResult.Location;
+		}
 	}
 
-	//Rail
-
-
-	return false;
+	return hitSuccess;
 }
 
 /*Get the direction (in world) where is pointing the crosshair. Returns true if the method successed*/
