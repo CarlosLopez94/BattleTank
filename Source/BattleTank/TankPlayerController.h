@@ -19,6 +19,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 
+	UPROPERTY(EditAnywhere, Category = "Screen Interface")
+	float crosshairXLocation = 0.5f;
+
+	UPROPERTY(EditAnywhere, Category = "Screen Interface")
+	float crosshairYLocation = 0.33333333f;
+
 private:
 	ATank* GetControlledTank() const;
 	void AimTowardsCrosshair();

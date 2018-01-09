@@ -41,35 +41,15 @@ void ATankPlayerController::AimTowardsCrosshair() {
 }
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const{
-	/*FVector playerViewPointLocation;
-	FRotator playerViewPointRotation;
-	GetPlayerViewPoint(playerViewPointLocation,
-		playerViewPointRotation);
-
-	///Draw a red trace in the world
-	FVector lineTraceEnd = playerViewPointLocation + playerViewPointRotation.Vector() * 50000; //replace by tank shoot range
-	DrawDebugLine(GetWorld(), playerViewPointLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 25.f);
-	///Setup query parameters
-	FCollisionQueryParams traceParameters = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
-
-	///Line-trace: Ray-cast out the reach distance
-	FHitResult hit;
-	GetWorld()->LineTraceSingleByObjectType(
-		hit,
-		playerViewPointLocation,
-		lineTraceEnd,
-		FCollisionObjectQueryParams(ECollisionChannel::ECC_WorldStatic),
-		traceParameters);
-
-	///See what we hit
-	if (hit.Actor != nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("can grabber %s, pos: %s"), *hit.Actor->GetName(), *hit.Actor->GetActorLocation().ToString());
-		return true;
-	} else {
-		UE_LOG(LogTemp, Warning, TEXT("No actor"), );
-		return false;
-	}
-	*/
+	///Find the crosshair position
+	int32 viewportSizeX;
+	int32 viewportSizeY;
+	GetViewportSize(viewportSizeX,viewportSizeY);
+	auto crosshairScreenLocation = FVector2D(viewportSizeX*crosshairXLocation,viewportSizeY*crosshairYLocation);
+	
+	/*///Deproject crosshairPosition
+	FVector2D crosshairInWorld = FVector2D();
+	DeprojectScreenPositionToWorld(crosshairScreenLocation.X, crosshairYLocation, crosshairInWorld.X, crosshairInWorld.Y);*/
 	return false;
 }
 
