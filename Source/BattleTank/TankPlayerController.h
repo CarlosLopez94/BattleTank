@@ -22,11 +22,14 @@ public:
 		float crosshairXLocation = 0.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Screen Interface")
-		float crosshairYLocation = 0.33333333f;
+		float crosshairYLocation = 0.5;
+	
+	float lineTraceRange = 1000000.f;
 
 private:
 	ATank * GetControlledTank() const;
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& hitLocation) const;
 	bool GetLookDirection(FVector2D screenLocation, FVector& lookDirection) const;
+	bool GetLookVectorHitLocation(FVector lookDirection, FHitResult& hitResult) const;
 };
