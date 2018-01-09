@@ -40,17 +40,31 @@ void ATankPlayerController::AimTowardsCrosshair() {
 	//rotate barrel
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const{
-	///Find the crosshair position
+bool ATankPlayerController::GetSightRayHitLocation(FVector& outHitLocation) const {
+	///Find the crosshair position 
 	int32 viewportSizeX;
 	int32 viewportSizeY;
-	GetViewportSize(viewportSizeX,viewportSizeY);
-	auto crosshairScreenLocation = FVector2D(viewportSizeX*crosshairXLocation,viewportSizeY*crosshairYLocation);
-	
-	/*///Deproject crosshairPosition
-	FVector2D crosshairInWorld = FVector2D();
-	DeprojectScreenPositionToWorld(crosshairScreenLocation.X, crosshairYLocation, crosshairInWorld.X, crosshairInWorld.Y);*/
+	GetViewportSize(viewportSizeX, viewportSizeY);
+	FVector2D crosshairScreenLocation = FVector2D(viewportSizeX*crosshairXLocation, viewportSizeY*crosshairYLocation);
+
+	///Deproject crosshairPosition
+	FVector lookDirection;
+	bool lookSuccess = GetLookDirection(crosshairScreenLocation, lookDirection);
+	if (lookSuccess) {
+		UE_LOG(LogTemp, Warning, TEXT("crosshairPositionInWorld: %s"), *lookDirection.ToString());
+	}
+
+	//Rail
+
+
 	return false;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D crosshairScreenLocation, FVector& lookDirection) const {
+	///Find the crosshair position
+	FVector cameraLocation; ///not used, auxiliar
+	bool success = DeprojectScreenPositionToWorld(crosshairScreenLocation.X, crosshairYLocation, cameraLocation, lookDirection);
+	return success;
 }
 
 
