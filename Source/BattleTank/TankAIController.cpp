@@ -43,15 +43,16 @@ ATank* ATankAIController::GetPlayerTank() const {
 	}
 }
 
-/*Moves the barrel to the position where the crosshair intersecs*/
+/*Moves the barrel to the location of the tank controlled by the player*/
 void ATankAIController::AimTowardsCrosshair() {
-	ATank* controlledTank = GetPlayerTank();
-	if (controlledTank!=nullptr) {
+	ATank* controlledTank = GetControlledTank();
+	ATank* playerTank = GetPlayerTank();
+	if (controlledTank!=nullptr && playerTank!=nullptr) {
 		///Get aim location
-		FVector aimLocation = controlledTank->GetActorLocation();
+		FVector aimLocation = playerTank->GetActorLocation();
 
 		///delegate to the tank
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController %s"), *controlledTank->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("TankAIController %s"), *controlledTank->GetName());
 		controlledTank->AimAt(aimLocation);
 	}
 }
