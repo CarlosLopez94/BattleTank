@@ -2,6 +2,8 @@
 
 #include "TankAimingComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Engine/World.h"
 
 
 // Sets default values for this component's properties
@@ -38,13 +40,27 @@ void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* barrelMesh) 
 }
 
 
-void UTankAimingComponent::AimAt(FVector locationToAim) const {
-	FVector barrelLocation;
+void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) const {
 	if (barrel != nullptr) {
-		barrelLocation = barrel->GetComponentLocation();
-	}else {
-		barrelLocation = FVector(0);
-	}
 
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at position [%s] from [%s]"), *GetOwner()->GetName(), *locationToAim.ToString(),*barrelLocation.ToString());
+		FVector outLaunchVelocity;
+		FVector startLocation = barrel->GetSocketLocation(FName("Projectile"));
+
+		///Calculate the outlaunchVelocity
+		bool success = UGameplayStatics::SuggestProjectileVelocity(
+			this, 
+			outLaunchVelocity, 
+			startLocation, 
+			locationToAim, 
+			launchSpeed,
+			false,
+			0,
+			0,
+			ESuggestProjVelocityTraceOption::DoNotTrace);
+
+		if (success) {
+			auto aimDirection = outLaunchVelocity.GetSafeNormal();
+			UE_LOG(LogTemp, Warning, TEXT("%s aiming at [%s]"),*GetOwner()->GetName(),*aimDirection.ToString());
+		}
+	}
 }

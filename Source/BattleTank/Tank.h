@@ -32,7 +32,8 @@ public:
 
 
 private:
-
+	UPROPERTY(EditAnywhere, Category = "Firing")
+		float launchSpeed = 10000; //find sensible initial velocity
 	UTankAimingComponent* tankAimingComponent = nullptr;
 	UStaticMeshComponent* barrel = nullptr;
 };
