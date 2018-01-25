@@ -7,6 +7,8 @@
 #include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
+class UTankBarrel;
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -26,7 +28,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetBarrelReference(UStaticMeshComponent* barrelMesh);
+	void SetBarrelReference(UTankBarrel* barrelMesh);
 
 	void AimAt(FVector aimLocation);
 
@@ -35,5 +37,5 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 		float launchSpeed = 10000; //find sensible initial velocity
 	UTankAimingComponent* tankAimingComponent = nullptr;
-	UStaticMeshComponent* barrel = nullptr;
+	UTankBarrel* barrel = nullptr;
 };

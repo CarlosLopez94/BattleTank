@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
+#include "TankBarrel.h"
 
 
 // Sets default values for this component's properties
@@ -35,12 +36,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* barrelMesh) {
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelMesh) {
 	barrel = barrelMesh;
 }
 
 
-void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) const {
+void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {
 	if (barrel != nullptr) {
 
 		FVector outLaunchVelocity;
@@ -48,19 +49,31 @@ void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) const
 
 		///Calculate the outlaunchVelocity
 		bool success = UGameplayStatics::SuggestProjectileVelocity(
-			this, 
-			outLaunchVelocity, 
-			startLocation, 
-			locationToAim, 
+			this,
+			outLaunchVelocity,
+			startLocation,
+			locationToAim,
 			launchSpeed,
 			false,
 			0,
 			0,
 			ESuggestProjVelocityTraceOption::DoNotTrace);
+		UE_LOG(LogTemp, Warning, TEXT("tick"));
 
 		if (success) {
-			auto aimDirection = outLaunchVelocity.GetSafeNormal();
-			UE_LOG(LogTemp, Warning, TEXT("%s aiming at [%s]"),*GetOwner()->GetName(),*aimDirection.ToString());
+			FVector aimDirection = outLaunchVelocity.GetSafeNormal();
+			//UE_LOG(LogTemp, Warning, TEXT("%s aiming at [%s]"), *GetOwner()->GetName(), *aimDirection.ToString());
+			MoveBarrelTowards(aimDirection);
 		}
 	}
+}
+
+void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection) {
+	//Calculate rotation and location (where is pointing it?)
+	auto BarrelRotator = barrel->GetForwardVector().Rotation();
+	auto AimRotator = aimDirection.Rotation();
+
+	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator [%s]"), *AimRotator.ToString());
+
+	barrel->Elevate(5);
 }
