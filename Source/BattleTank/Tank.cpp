@@ -39,6 +39,17 @@ void ATank::SetBarrelReference(UTankBarrel* barrelComponent) {
 	}
 }
 
+
+void ATank::SetTurretReference(UTankTurret* turretMesh) {
+	if (tankAimingComponent!=nullptr) {
+		tankAimingComponent->SetTurretReference(turretMesh);
+	}
+}
+
+void ATank::Fire() {
+	UE_LOG(LogTemp, Warning, TEXT("Firing!!!"));
+}
+
 void ATank::AimAt(FVector aimLocation) {
 	if (tankAimingComponent != nullptr) {
 		tankAimingComponent->AimAt(aimLocation, launchSpeed);

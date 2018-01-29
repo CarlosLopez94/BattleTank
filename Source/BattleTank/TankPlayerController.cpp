@@ -30,7 +30,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 void ATankPlayerController::AimTowardsCrosshair() {
 	ATank* controlledTank = GetControlledTank();
-	if (controlledTank!=nullptr) {
+	if (controlledTank != nullptr) {
 		//Calculate crosshair
 		FVector hitLocation;
 		bool success = GetSightRayHitLocation(hitLocation);
@@ -77,7 +77,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHitResult& hitResult) const {
 	///Get the location of the Camera
 	FVector cameraLocation = PlayerCameraManager->GetCameraLocation(); //"GetPlayerViewPoint" can be used too
-	
+
 	FVector lineTraceEnd = cameraLocation + lookDirection * lineTraceRange;
 	DrawDebugLine(GetWorld(), cameraLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 15.f);
 
