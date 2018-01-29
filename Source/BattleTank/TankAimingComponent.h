@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "Engine/EngineBaseTypes.h"
 #include "TankAimingComponent.generated.h"
 
 class UTankBarrel; //Forward declaration

@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAimingComponent.h"
+#include "Components/ActorComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
@@ -58,22 +59,22 @@ void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {
 			0,
 			0,
 			ESuggestProjVelocityTraceOption::DoNotTrace);
-		UE_LOG(LogTemp, Warning, TEXT("tick"));
 
 		if (success) {
 			FVector aimDirection = outLaunchVelocity.GetSafeNormal();
-			//UE_LOG(LogTemp, Warning, TEXT("%s aiming at [%s]"), *GetOwner()->GetName(), *aimDirection.ToString());
+			UE_LOG(LogTemp, Warning, TEXT("[%f] aim solution found"), GetWorld()->GetTimeSeconds());
 			MoveBarrelTowards(aimDirection);
+		}else{
+			UE_LOG(LogTemp, Warning, TEXT("[%f] NO aim solution found"), GetWorld()->GetTimeSeconds());
 		}
 	}
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection) {
 	//Calculate rotation and location (where is pointing it?)
-	auto BarrelRotator = barrel->GetForwardVector().Rotation();
-	auto AimRotator = aimDirection.Rotation();
+	auto barrelRotator = barrel->GetForwardVector().Rotation();
+	auto aimRotator = aimDirection.Rotation();
+	auto deltaRotator = aimRotator - barrelRotator;
 
-	UE_LOG(LogTemp, Warning, TEXT("AimAsRotator [%s]"), *AimRotator.ToString());
-
-	barrel->Elevate(5);
+	barrel->Elevate(deltaRotator.Pitch);
 }
