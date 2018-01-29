@@ -29,7 +29,6 @@ void UTankAimingComponent::BeginPlay()
 
 }
 
-
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelMesh) {
 	barrel = barrelMesh;
 }
@@ -38,6 +37,9 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* turretMesh) {
 	turret = turretMesh;
 }
 
+UTankBarrel* UTankAimingComponent::GetBarrel() {
+	return barrel;
+}
 
 
 void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {

@@ -27,6 +27,8 @@ public:
 
 	void SetBarrelReference(UTankBarrel* barrelMesh);
 	void SetTurretReference(UTankTurret* turretMesh);
+	UTankBarrel* GetBarrel();
+
 	void AimAt(FVector aimLocation, float launchSpeed);
 
 	void MoveBarrelTowards(FVector aimDirection);
