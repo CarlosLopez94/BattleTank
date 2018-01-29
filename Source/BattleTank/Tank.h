@@ -38,7 +38,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
-private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 		float launchSpeed = 4000; //find sensible initial velocity
 	UTankAimingComponent* tankAimingComponent = nullptr;
