@@ -18,5 +18,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Input")
 	void SetThrottle(float throttle);
 	
-	
+	//Max force for each track in Newtowns
+	UPROPERTY(EditDefaultsOnly, Category = "Movement")
+	float trackMaxDrivingForce = 400000;
 };
