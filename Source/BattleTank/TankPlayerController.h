@@ -15,10 +15,10 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 
-	UPROPERTY(EditAnywhere, Category = "Screen Interface")
+	UPROPERTY(EditDefaultsOnly, Category = "Screen Interface")
 		float crosshairXLocation = 0.5f;
 
-	UPROPERTY(EditAnywhere, Category = "Screen Interface")
+	UPROPERTY(EditDefaultsOnly, Category = "Screen Interface")
 		float crosshairYLocation = 0.5;
 	
 	float lineTraceRange = 1000000.f;

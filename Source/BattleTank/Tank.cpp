@@ -44,21 +44,22 @@ void ATank::SetBarrelReference(UTankBarrel* barrelComponent) {
 
 
 void ATank::SetTurretReference(UTankTurret* turretMesh) {
-	if (tankAimingComponent!=nullptr) {
+	if (tankAimingComponent != nullptr) {
 		tankAimingComponent->SetTurretReference(turretMesh);
 	}
 }
 
 void ATank::Fire() {
-	UE_LOG(LogTemp, Warning, TEXT("Firing!!!"));
-	if (barrel!=nullptr) {
+	float firingTime = (float)FPlatformTime::Seconds();
+	bool isReloaded = (firingTime - lastFireTime) > reloadTimeSeconds;
+	if (barrel != nullptr && isReloaded) {
+		UE_LOG(LogTemp, Warning, TEXT("Firing!!!"));
 		FVector projectileLocation = barrel->GetSocketLocation(FName("Projectile"));
 		FRotator projectileRotation = barrel->GetSocketRotation(FName("Projectile"));
-		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBlueprint,projectileLocation,projectileRotation);
-	
+		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBlueprint, projectileLocation, projectileRotation);
+
 		projectile->LaunchProjectile(launchSpeed);
-	} else {
-		//log
+		lastFireTime = firingTime;
 	}
 }
 

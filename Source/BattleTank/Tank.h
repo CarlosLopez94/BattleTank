@@ -38,11 +38,19 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
 
-	UPROPERTY(EditAnywhere, Category = "Firing")
-		float launchSpeed = 4000; //find sensible initial velocity
+	//Variables
 	UTankAimingComponent* tankAimingComponent = nullptr;
 	UTankBarrel* barrel = nullptr;
 
-	UPROPERTY(EditAnywhere, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> projectileBlueprint;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float launchSpeed = 4000;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float reloadTimeSeconds = 2;
+
+private:
+	float lastFireTime;
+
+
 };
