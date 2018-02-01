@@ -79,7 +79,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHit
 	FVector cameraLocation = PlayerCameraManager->GetCameraLocation(); //"GetPlayerViewPoint" can be used too
 
 	FVector lineTraceEnd = cameraLocation + lookDirection * lineTraceRange;
-	DrawDebugLine(GetWorld(), cameraLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 15.f);
+	//DrawDebugLine(GetWorld(), cameraLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 15.f);
 
 	bool result = GetWorld()->LineTraceSingleByChannel(hitResult,
 		cameraLocation,

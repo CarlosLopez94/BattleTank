@@ -7,6 +7,7 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
+class UTankMovementComponent;
 class UTankAimingComponent;
 class UTankTurret;
 class AProjectile;
@@ -39,10 +40,11 @@ public:
 		void Fire();
 
 	//Variables
+	
 	UTankAimingComponent* tankAimingComponent = nullptr;
 	UTankBarrel* barrel = nullptr;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> projectileBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float launchSpeed = 4000;
@@ -50,7 +52,9 @@ public:
 		float reloadTimeSeconds = 2;
 
 private:
-	float lastFireTime;
+	double lastFireTime;
 
-
+protected:
+	UPROPERTY(BlueprintReadOnly)
+		UTankMovementComponent* tankMovementComponent = nullptr;
 };

@@ -1,10 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "TankMovementComponent.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Engine/World.h"
 #include "Projectile.h"
+
 
 // Sets default values
 ATank::ATank()
@@ -16,7 +18,7 @@ ATank::ATank()
 
 	///Set aimingComponent reference
 	tankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-
+	tankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
 
 
 }
@@ -50,15 +52,17 @@ void ATank::SetTurretReference(UTankTurret* turretMesh) {
 }
 
 void ATank::Fire() {
-	float firingTime = (float)FPlatformTime::Seconds();
+	double firingTime = FPlatformTime::Seconds();
 	bool isReloaded = (firingTime - lastFireTime) > reloadTimeSeconds;
 	if (barrel != nullptr && isReloaded) {
-		UE_LOG(LogTemp, Warning, TEXT("Firing!!!"));
 		FVector projectileLocation = barrel->GetSocketLocation(FName("Projectile"));
 		FRotator projectileRotation = barrel->GetSocketRotation(FName("Projectile"));
 		auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBlueprint, projectileLocation, projectileRotation);
-
-		projectile->LaunchProjectile(launchSpeed);
+		if (projectile!=nullptr) {
+			projectile->LaunchProjectile(launchSpeed);
+		} else {
+			UE_LOG(LogTemp, Warning, TEXT("Cant Fire.  there isnt a selected projectile"));
+		}
 		lastFireTime = firingTime;
 	}
 }
