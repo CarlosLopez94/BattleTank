@@ -4,19 +4,25 @@
 #include "TankTrack.h"
 
 void UTankMovementComponent::Initialiase(UTankTrack* leftTrack, UTankTrack* rightTrack) {
-	if (leftTrack!=nullptr && rightTrack!=nullptr) {
-		this->leftTrack = leftTrack;
-		this->rightTrack = rightTrack;
-	} else {
-		UE_LOG(LogTemp, Error, TEXT("TankMovementComponent: At least one of the tracks is null"));
-	}
+	this->leftTrack = leftTrack;
+	this->rightTrack = rightTrack;
 }
 
 
 void UTankMovementComponent::IntendMoveForwards(float throwValue) {
-	UE_LOG(LogTemp, Warning, TEXT("intened move forwards : %f"), throwValue);
-
-	leftTrack->SetThrottle(throwValue);
-	rightTrack->SetThrottle(throwValue);
+	if (leftTrack != nullptr && rightTrack != nullptr) {
+		leftTrack->SetThrottle(throwValue);
+		rightTrack->SetThrottle(throwValue);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("TankMovementComponent IntendmoveForwards: At least one of the tracks is null"));
+	}
 }
 
+void UTankMovementComponent::IntendMoveRight(float throwValue) {
+	if (leftTrack != nullptr && rightTrack != nullptr) {
+		leftTrack->SetThrottle(-throwValue);
+		rightTrack->SetThrottle(throwValue);
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("TankMovementComponent IntendmoveRight: At least one of the tracks is null"));
+	}
+}

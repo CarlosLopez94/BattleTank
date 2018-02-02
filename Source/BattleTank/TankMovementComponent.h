@@ -13,15 +13,19 @@ UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 {
 	GENERATED_BODY()
-	
+
 public:
 	UFUNCTION(BlueprintCallable)
-	void Initialiase(UTankTrack* leftTrack, UTankTrack* rightTrack);
+		void Initialiase(UTankTrack* leftTrack, UTankTrack* rightTrack);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	void IntendMoveForwards(float throwValue);
+		void IntendMoveForwards(float throwValue);
+
+	UFUNCTION(BlueprintCallable, Category = "Input")
+		void IntendMoveRight(float throwValue);
+
 private:
 	UTankTrack* leftTrack = nullptr;
 	UTankTrack* rightTrack = nullptr;
-	
+
 };
