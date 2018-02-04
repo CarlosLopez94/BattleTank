@@ -41,7 +41,6 @@ public:
 
 	//Variables
 	
-	UTankAimingComponent* tankAimingComponent = nullptr;
 	UTankBarrel* barrel = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -55,6 +54,9 @@ private:
 	double lastFireTime;
 
 protected:
+	UPROPERTY(BlueprintReadOnly)
+	UTankAimingComponent * tankAimingComponent = nullptr;
+
 	UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent* tankMovementComponent = nullptr;
 };
