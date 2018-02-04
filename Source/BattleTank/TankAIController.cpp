@@ -13,6 +13,9 @@ void ATankAIController::Tick(float deltaTime) {
 	ATank* controlledTank = Cast<ATank>(GetPawn());
 	ATank* playerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	if (controlledTank != nullptr && playerTank != nullptr) {
+		///Move towards the player
+		MoveToActor(playerTank, acceptanceRadius);
+
 		///Get aim location
 		FVector aimLocation = playerTank->GetActorLocation();
 

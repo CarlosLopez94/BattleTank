@@ -28,4 +28,5 @@ private:
 	UTankTrack* leftTrack = nullptr;
 	UTankTrack* rightTrack = nullptr;
 
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };
