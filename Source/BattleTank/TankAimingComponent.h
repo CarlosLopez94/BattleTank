@@ -9,34 +9,33 @@
 //Enum for aiming state
 UENUM()
 enum class EFiringStatus : uint8 {
+	Reloading,
 	Locked,
-	Aiming,
-	Reloading
+	Aiming
 };
 
 //Forward declaration
 class UTankTurret;
-class UTankBarrel; 
+class UTankBarrel;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringStatus firingState = EFiringStatus::Reloading;
-public:	
+		EFiringStatus firingState = EFiringStatus::Locked;
 
-	void SetBarrelReference(UTankBarrel* barrelMesh);
-	void SetTurretReference(UTankTurret* turretMesh);
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void Initialise(UTankBarrel* barrel, UTankTurret* turret);
+
+public:
+
 	UTankBarrel* GetBarrel();
 
 	void AimAt(FVector aimLocation, float launchSpeed);
@@ -45,8 +44,7 @@ public:
 	void MoveTurretTowards(FVector aimDirection);
 private:
 
-	UTankAimingComponent * tankAimingComponent = nullptr;
 	UTankBarrel* barrel = nullptr;
 	UTankTurret* turret = nullptr;
-	
+
 };

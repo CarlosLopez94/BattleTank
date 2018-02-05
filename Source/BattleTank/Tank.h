@@ -20,19 +20,7 @@ class BATTLETANK_API ATank : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ATank();
-
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetBarrelReference(UTankBarrel* barrelMesh);
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-		void SetTurretReference(UTankTurret* turretMesh);
-
 
 	void AimAt(FVector aimLocation);
 
@@ -40,9 +28,6 @@ public:
 		void Fire();
 
 	//Variables
-	
-	UTankBarrel* barrel = nullptr;
-
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> projectileBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -55,7 +40,7 @@ private:
 
 protected:
 	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent * tankAimingComponent = nullptr;
+		UTankAimingComponent* tankAimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent* tankMovementComponent = nullptr;

@@ -4,14 +4,16 @@
 #include "Tank.h"
 #include "Engine/World.h"
 #include "Public/DrawDebugHelpers.h"
+#include "TankAimingComponent.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	ATank* controlledTank = GetControlledTank();
-	if (controlledTank != nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController controls %s"), *controlledTank->GetName());
-	} else {
-		UE_LOG(LogTemp, Error, TEXT("TankPlayerController IS NOT controlling any tank"));
+	if (ensure(controlledTank)) {
+		auto autoComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+		if (ensure(autoComponent)) {
+			FoundAimingComponent(autoComponent);
+		}
 	}
 }
 
@@ -30,7 +32,7 @@ ATank* ATankPlayerController::GetControlledTank() const {
 
 void ATankPlayerController::AimTowardsCrosshair() {
 	ATank* controlledTank = GetControlledTank();
-	if (controlledTank != nullptr) {
+	if (ensure(controlledTank)) {
 		//Calculate crosshair
 		FVector hitLocation;
 		bool success = GetSightRayHitLocation(hitLocation);

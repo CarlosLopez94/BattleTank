@@ -10,9 +10,7 @@ void UTankMovementComponent::Initialiase(UTankTrack* leftTrack, UTankTrack* righ
 
 
 void UTankMovementComponent::IntendMoveForwards(float throwValue) {
-	if (leftTrack != nullptr && rightTrack != nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("%s has %f"), *GetOwner()->GetName(), throwValue);
-
+	if (ensure(leftTrack && rightTrack)) {
 		leftTrack->SetThrottle(throwValue);
 		rightTrack->SetThrottle(throwValue);
 	} else {
@@ -21,7 +19,7 @@ void UTankMovementComponent::IntendMoveForwards(float throwValue) {
 }
 
 void UTankMovementComponent::IntendMoveRight(float throwValue) {
-	if (leftTrack != nullptr && rightTrack != nullptr) {
+	if (ensure(leftTrack && rightTrack)) {
 		leftTrack->SetThrottle(-throwValue);
 		rightTrack->SetThrottle(throwValue);
 	} else {

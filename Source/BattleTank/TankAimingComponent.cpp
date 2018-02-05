@@ -19,21 +19,8 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-
-// Called when the game starts
-void UTankAimingComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-
-}
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* barrelMesh) {
+void UTankAimingComponent::Initialise(UTankBarrel* barrelMesh, UTankTurret* turretMesh) {
 	barrel = barrelMesh;
-}
-
-void UTankAimingComponent::SetTurretReference(UTankTurret* turretMesh) {
 	turret = turretMesh;
 }
 
@@ -43,7 +30,7 @@ UTankBarrel* UTankAimingComponent::GetBarrel() {
 
 
 void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {
-	if (barrel != nullptr 	&& turret != nullptr) {
+	if (ensure(barrel && turret)) {
 
 		FVector outLaunchVelocity;
 		FVector startLocation = barrel->GetSocketLocation(FName("Projectile"));
@@ -65,13 +52,9 @@ void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {
 			//UE_LOG(LogTemp, Warning, TEXT("[%f] aim solution found"), GetWorld()->GetTimeSeconds());
 			MoveTurretTowards(aimDirection);
 			MoveBarrelTowards(aimDirection);
-		}
-		else {
+		} else {
 			UE_LOG(LogTemp, Warning, TEXT("[%f] NO aim solution found"), GetWorld()->GetTimeSeconds());
 		}
-	}
-	else {
-		UE_LOG(LogTemp, Error, TEXT("barrel or turret references DONT FOUND"));
 	}
 }
 
