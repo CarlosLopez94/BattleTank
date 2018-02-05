@@ -12,7 +12,10 @@ UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
 {
 	GENERATED_BODY()
-	
+protected:
+	UPROPERTY(BlueprintReadOnly)
+		UTankAimingComponent* tankAimingComponent = nullptr;
+
 private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;

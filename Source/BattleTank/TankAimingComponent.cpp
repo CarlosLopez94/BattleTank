@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -31,7 +32,6 @@ UTankBarrel* UTankAimingComponent::GetBarrel() {
 
 void UTankAimingComponent::AimAt(FVector locationToAim) {
 	if (ensure(barrel && turret)) {
-
 		FVector outLaunchVelocity;
 		FVector startLocation = barrel->GetSocketLocation(FName("Projectile"));
 
@@ -49,7 +49,6 @@ void UTankAimingComponent::AimAt(FVector locationToAim) {
 
 		if (success) {
 			FVector aimDirection = outLaunchVelocity.GetSafeNormal();
-			//UE_LOG(LogTemp, Warning, TEXT("[%f] aim solution found"), GetWorld()->GetTimeSeconds());
 			MoveTurretTowards(aimDirection);
 			MoveBarrelTowards(aimDirection);
 		} else {
@@ -57,6 +56,24 @@ void UTankAimingComponent::AimAt(FVector locationToAim) {
 		}
 	}
 }
+
+void UTankAimingComponent::Fire() {
+	double firingTime = FPlatformTime::Seconds();
+	bool isReloaded = (firingTime - lastFireTime) > reloadTimeSeconds;
+
+	if (ensure(barrel)) {
+		if (isReloaded) {
+			FVector projectileLocation = barrel->GetSocketLocation(FName("Projectile"));
+			FRotator projectileRotation = barrel->GetSocketRotation(FName("Projectile"));
+			auto projectile = GetWorld()->SpawnActor<AProjectile>(projectileBlueprint, projectileLocation, projectileRotation);
+			if (ensure(projectile)) {
+				projectile->LaunchProjectile(4000);
+			}
+			lastFireTime = firingTime;
+		}
+	}
+}
+
 
 void UTankAimingComponent::MoveBarrelTowards(FVector aimDirection) {
 	//Calculate rotation and location (where is pointing it?)
