@@ -49,10 +49,12 @@ protected:
 	void Initialise(UTankBarrel* barrel, UTankTurret* turret);
 
 private:
+	FVector lastAimDirection;
 	double lastFireTime;
 	UTankBarrel* barrel = nullptr;
 	UTankTurret* turret = nullptr;
 
+	bool IsBarrelMoving();
 	void MoveBarrelTowards(FVector aimDirection);
 	void MoveTurretTowards(FVector aimDirection);
 };
