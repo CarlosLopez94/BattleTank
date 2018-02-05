@@ -16,6 +16,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController {
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		ATank * GetControlledTank() const;
+	UPROPERTY(BlueprintReadOnly)
+		UTankAimingComponent* tankAimingComponent = nullptr;
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* aimCompRef);
 private:

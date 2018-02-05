@@ -30,7 +30,8 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringStatus firingState = EFiringStatus::Locked;
-
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float launchSpeed = 4000;
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* barrel, UTankTurret* turret);
 
@@ -38,7 +39,7 @@ public:
 
 	UTankBarrel* GetBarrel();
 
-	void AimAt(FVector aimLocation, float launchSpeed);
+	void AimAt(FVector aimLocation);
 
 	void MoveBarrelTowards(FVector aimDirection);
 	void MoveTurretTowards(FVector aimDirection);

@@ -29,7 +29,7 @@ UTankBarrel* UTankAimingComponent::GetBarrel() {
 }
 
 
-void UTankAimingComponent::AimAt(FVector locationToAim, float launchSpeed) {
+void UTankAimingComponent::AimAt(FVector locationToAim) {
 	if (ensure(barrel && turret)) {
 
 		FVector outLaunchVelocity;

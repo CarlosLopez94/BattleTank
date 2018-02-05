@@ -22,7 +22,7 @@ public:
 	ATank();
 	virtual void BeginPlay() override;
 
-	void AimAt(FVector aimLocation);
+	//void AimAt(FVector aimLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 		void Fire();
@@ -31,17 +31,12 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		TSubclassOf<AProjectile> projectileBlueprint;
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float launchSpeed = 4000;
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float reloadTimeSeconds = 2;
 
 private:
 	double lastFireTime;
 
 protected:
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* tankAimingComponent = nullptr;
-
 	UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent* tankMovementComponent = nullptr;
 };

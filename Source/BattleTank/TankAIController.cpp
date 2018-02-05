@@ -21,7 +21,7 @@ void ATankAIController::Tick(float deltaTime) {
 
 		///delegate to the tank
 		//UE_LOG(LogTemp, Warning, TEXT("TankAIController %s"), *controlledTank->GetName());
-		controlledTank->AimAt(aimLocation);
+		//controlledTank->AimAt(aimLocation);
 		controlledTank->Fire();
 	}
 }
