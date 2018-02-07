@@ -8,6 +8,10 @@ UTankTrack::UTankTrack() {
 
 }
 
+void UTankTrack::BeginPlay() {
+	Super::BeginPlay();
+	this->OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
+}
 void UTankTrack::SetThrottle(float throttle) {
 	//	UE_LOG(LogTemp, Warning, TEXT("%s is trhotting with value: %f"), *GetName(), throttle);
 
@@ -15,7 +19,6 @@ void UTankTrack::SetThrottle(float throttle) {
 	FVector forceLocation = GetComponentLocation();
 	auto tankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	tankRoot->AddForceAtLocation(forceApplied, forceLocation);
-	UE_LOG(LogTemp, Warning, TEXT("throttle %f"), throttle);
 }
 
 void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
@@ -27,4 +30,8 @@ void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActor
 	auto correctionForce = tankRoot->GetMass() * correctionAcceleration / 2; // divide by two because we have two tracks
 	tankRoot->AddForce(correctionAcceleration);
 
+}
+
+void UTankTrack::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit) {
+	UE_LOG(LogTemp, Warning, TEXT("hit!!!"));
 }
