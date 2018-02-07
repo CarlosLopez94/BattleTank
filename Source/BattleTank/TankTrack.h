@@ -20,5 +20,10 @@ public:
 	
 	//Max force for each track in Newtowns
 	UPROPERTY(EditDefaultsOnly, Category = "Movement")
-	float trackMaxDrivingForce = 400000;
+	float trackMaxDrivingForce = 40000000.0;
+
+private:
+	UTankTrack();
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 };

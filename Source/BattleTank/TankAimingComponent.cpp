@@ -26,7 +26,6 @@ void UTankAimingComponent::BeginPlay() {
 
 
 void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) {
-	UE_LOG(LogTemp, Warning, TEXT("[%f] aiming tick"), GetWorld()->GetTimeSeconds());
 	double currentTime = FPlatformTime::Seconds();
 	if ((currentTime - lastFireTime) < reloadTimeSeconds) {
 		firingState = EFiringStatus::Reloading;
@@ -111,7 +110,7 @@ void UTankAimingComponent::MoveTurretTowards(FVector aimDirection) {
 bool UTankAimingComponent::IsBarrelMoving() {
 	bool isMoving = false;
 	if (ensure(barrel)) {
-		isMoving = !barrel->GetForwardVector().GetSafeNormal().Equals(lastAimDirection, 0.1f);
+		isMoving = !barrel->GetForwardVector().GetSafeNormal().Equals(lastAimDirection, 0.01f);
 	}
 	return isMoving;
 }
