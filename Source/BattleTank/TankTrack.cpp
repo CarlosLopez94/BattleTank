@@ -26,8 +26,7 @@ void UTankTrack::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UP
 
 void UTankTrack::SetThrottle(float throttle) {
 	currentThrottle = FMath::Clamp<float>(currentThrottle + throttle, -1.f, 1.f);
-	UE_LOG(LogTemp, Warning, TEXT("currentthrotlñe: %f"), currentThrottle);
-
+//	UE_LOG(LogTemp, Warning, TEXT("currentthrotlñe: %f"), currentThrottle);
 }
 
 void UTankTrack::DriveTank() {
@@ -45,5 +44,5 @@ void UTankTrack::ApplySidewaysForce() {
 	auto tankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto correctionForce = tankRoot->GetMass() * correctionAcceleration / 2; // divide by two because we have two tracks
 	tankRoot->AddForce(correctionAcceleration);
-	UE_LOG(LogTemp, Warning, TEXT("[%f] force applied"), GetWorld()->GetTimeSeconds());
+	//UE_LOG(LogTemp, Warning, TEXT("[%f] force applied"), GetWorld()->GetTimeSeconds());
 }
