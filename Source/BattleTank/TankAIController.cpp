@@ -22,6 +22,8 @@ void ATankAIController::Tick(float deltaTime) {
 
 		//UE_LOG(LogTemp, Warning, TEXT("TankAIController %s"), *controlledTank->GetName());
 		tankAimingComponent->AimAt(aimLocation);
-		tankAimingComponent->Fire();
+		if (tankAimingComponent->GetFiringState() == EFiringStatus::Locked) {
+			tankAimingComponent->Fire();
+		}
 	}
 }
