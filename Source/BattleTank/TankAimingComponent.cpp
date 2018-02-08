@@ -36,7 +36,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 	} else {
 		firingState = EFiringStatus::Locked;
 	}
-	UE_LOG(LogTemp, Warning, TEXT("[%f] .......... %i"), GetWorld()->GetTimeSeconds(), currentAmmo);
+	//UE_LOG(LogTemp, Warning, TEXT("[%f] .......... %i"), GetWorld()->GetTimeSeconds(), currentAmmo);
 }
 
 EFiringStatus UTankAimingComponent::GetFiringState() {
