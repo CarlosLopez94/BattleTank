@@ -8,13 +8,14 @@
 
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
+class URadialForceComponent;
 
 UCLASS()
 class BATTLETANK_API AProjectile : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AProjectile();
 
@@ -22,7 +23,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -30,11 +31,14 @@ public:
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* collisionMesh = nullptr;
+		UStaticMeshComponent* collisionMesh = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* launchBlast = nullptr;
+		UParticleSystemComponent* launchBlast = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UParticleSystemComponent* impactBlast = nullptr;
+		UParticleSystemComponent* impactBlast = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+		URadialForceComponent* exposionForce = nullptr;
+
 
 	UProjectileMovementComponent* projectileMovementComponent = nullptr;
 

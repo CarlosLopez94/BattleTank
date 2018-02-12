@@ -3,6 +3,7 @@
 #include "Projectile.h"
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -24,6 +25,9 @@ AProjectile::AProjectile()
 
 	projectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement Component"));
 	projectileMovementComponent->bAutoActivate = false;
+
+	exposionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	exposionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 }
 
 // Called when the game starts or when spawned
@@ -43,6 +47,7 @@ void AProjectile::Tick(float DeltaTime)
 void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit) {
 	impactBlast->Activate();
 	launchBlast->Deactivate();
+	exposionForce->FireImpulse();
 	UE_LOG(LogTemp, Warning, TEXT("activating!"));
 
 }
