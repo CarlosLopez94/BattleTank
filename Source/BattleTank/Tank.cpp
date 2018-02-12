@@ -9,3 +9,15 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+float ATank::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) {
+	int32 damageToApply = FMath::Clamp<int32>(FPlatformMath::RoundToInt(Damage),0, currentHealth);
+	currentHealth = currentHealth - damageToApply;
+
+	//Camera shake
+
+	//Check if tank stills alive
+	if (currentHealth <= 0) {
+		UE_LOG(LogTemp, Warning, TEXT("tank %s has died :("),*GetName());
+	}
+	return damageToApply;
+}

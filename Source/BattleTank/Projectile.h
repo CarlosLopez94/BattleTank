@@ -37,9 +37,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 		UParticleSystemComponent* impactBlast = nullptr;
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-		URadialForceComponent* exposionForce = nullptr;
-	UPROPERTY(EditDefaultsOnly, Category = "Components")
+		URadialForceComponent* explosionForce = nullptr;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		float destroyDelay = 10;
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		float  projectileDamage = 20;
+
 
 	UProjectileMovementComponent* projectileMovementComponent = nullptr;
 
