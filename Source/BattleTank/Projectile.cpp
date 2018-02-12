@@ -4,6 +4,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Engine/World.h"
+#include "Public/TimerManager.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
@@ -45,11 +47,22 @@ void AProjectile::Tick(float DeltaTime)
 }
 
 void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit) {
+	//logic
 	impactBlast->Activate();
 	launchBlast->Deactivate();
 	exposionForce->FireImpulse();
 	UE_LOG(LogTemp, Warning, TEXT("activating!"));
 
+	//Destroy mesh component
+	SetRootComponent(exposionForce);
+	collisionMesh->DestroyComponent();
+
+	FTimerHandle fTimerHandle; 
+	float time = 0; 
+	GetWorld()->GetTimerManager().SetTimer(fTimerHandle, this, &AProjectile::DestroyProjectile, destroyDelay, false);
+	
+	//(fTimerHandle, time, false);
+	
 }
 
 void AProjectile::LaunchProjectile(float speed) {
@@ -57,3 +70,7 @@ void AProjectile::LaunchProjectile(float speed) {
 	projectileMovementComponent->Activate();
 }
 
+void AProjectile::DestroyProjectile() {
+	UE_LOG(LogTemp, Warning, TEXT("%s destroy!"), *GetName());
+	Destroy();
+}
