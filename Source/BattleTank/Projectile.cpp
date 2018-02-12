@@ -15,8 +15,12 @@ AProjectile::AProjectile()
 	collisionMesh->SetNotifyRigidBodyCollision(true);
 	collisionMesh->SetVisibility(false);
 
-	launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Particle System Component"));
-	launchBlast->AttachTo(RootComponent);
+	launchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Particle System Component - launch blast"));
+	launchBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
+	impactBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Particle System Component - impact blast"));
+	impactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+	impactBlast->bAutoActivate = false;
 
 	projectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement Component"));
 	projectileMovementComponent->bAutoActivate = false;
@@ -26,13 +30,20 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-
+	collisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
 
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit) {
+	impactBlast->Activate();
+	launchBlast->Deactivate();
+	UE_LOG(LogTemp, Warning, TEXT("activating!"));
 
 }
 
