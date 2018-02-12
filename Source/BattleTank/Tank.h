@@ -22,6 +22,9 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	UFUNCTION(BluEprintPure, Category = "Health")
+	float GetHealthPercentage() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
 	int32 MAX_HEALTH = 100;
