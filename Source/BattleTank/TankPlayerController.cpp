@@ -99,5 +99,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHit
 }
 
 void ATankPlayerController::OnPossedTankDeath() {
-	UE_LOG(LogTemp, Warning, TEXT("tank has die. Received on player controlled"));
+	//UE_LOG(LogTemp, Warning, TEXT("tank has die. Received on player controlled"));
+	StartSpectatingOnly();
 }

@@ -15,8 +15,6 @@ class BATTLETANK_API ATankAIController : public AAIController
 protected:
 	UPROPERTY(BlueprintReadOnly)
 		UTankAimingComponent* tankAimingComponent = nullptr;
-	
-
 
 private:
 	float acceptanceRadius = 8000;

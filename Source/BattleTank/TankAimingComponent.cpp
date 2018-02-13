@@ -21,6 +21,7 @@ UTankAimingComponent::UTankAimingComponent()
 }
 
 void UTankAimingComponent::BeginPlay() {
+	Super::BeginPlay();
 	lastFireTime = FPlatformTime::Seconds();
 	currentAmmo = MAX_AMMO;
 }

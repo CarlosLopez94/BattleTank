@@ -39,7 +39,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-		EFiringStatus firingState = EFiringStatus::Locked;
+		EFiringStatus firingState = EFiringStatus::Reloading;
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float launchSpeed = 8000;
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
