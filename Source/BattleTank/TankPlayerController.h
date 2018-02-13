@@ -37,4 +37,5 @@ private:
 
 	UFUNCTION()
 		void OnPossedTankDeath();
+
 };

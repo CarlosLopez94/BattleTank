@@ -89,7 +89,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHit
 	bool result = GetWorld()->LineTraceSingleByChannel(hitResult,
 		cameraLocation,
 		lineTraceEnd,
-		ECollisionChannel::ECC_Visibility);
+		ECollisionChannel::ECC_Camera);
 
 	if (!result) {
 		hitResult.Location = FVector::ZeroVector;
@@ -102,3 +102,4 @@ void ATankPlayerController::OnPossedTankDeath() {
 	//UE_LOG(LogTemp, Warning, TEXT("tank has die. Received on player controlled"));
 	StartSpectatingOnly();
 }
+
