@@ -28,10 +28,13 @@ private:
 	float lineTraceRange = 1000000.f;
 
 	virtual void BeginPlay() override;
+	virtual void SetPawn(APawn* InPawn) override;
 	virtual void Tick(float deltaTime) override;
 	void AimTowardsCrosshair();
 	bool GetSightRayHitLocation(FVector& hitLocation) const;
 	bool GetLookDirection(FVector2D screenLocation, FVector& lookDirection) const;
 	bool GetLookVectorHitLocation(FVector lookDirection, FHitResult& hitResult) const;
 
+	UFUNCTION()
+		void OnPossedTankDeath();
 };

@@ -52,7 +52,6 @@ void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, U
 	impactBlast->Activate();
 	launchBlast->Deactivate();
 	explosionForce->FireImpulse();
-	UE_LOG(LogTemp, Warning, TEXT("activating!"));
 
 	//Destroy mesh component
 	SetRootComponent(explosionForce);
@@ -81,6 +80,5 @@ void AProjectile::LaunchProjectile(float speed) {
 }
 
 void AProjectile::DestroyProjectile() {
-	UE_LOG(LogTemp, Warning, TEXT("%s destroy!"), *GetName());
 	Destroy();
 }

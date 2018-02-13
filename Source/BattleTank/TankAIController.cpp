@@ -1,12 +1,25 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "Tank.h"
 #include "TankAimingComponent.h"
 #include "Engine/World.h"
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
 	tankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+}
+
+//It has to be on this method, if we do this on beginPlay it wont work sometimes and in the contructor is too early
+void ATankAIController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn!=nullptr) {
+		auto controlledTank = Cast<ATank>(InPawn);
+		if (ensure(controlledTank)) {
+			//subscribe
+			controlledTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossedTankDeath);
+		}
+	}
 }
 
 void ATankAIController::Tick(float deltaTime) {
@@ -26,4 +39,8 @@ void ATankAIController::Tick(float deltaTime) {
 			tankAimingComponent->Fire();
 		}
 	}
+}
+
+void ATankAIController::OnPossedTankDeath() {
+	UE_LOG(LogTemp, Warning, TEXT("tank has die. EEEEEEEEEEEEEEEEEEEEEEEEEE AI"));
 }

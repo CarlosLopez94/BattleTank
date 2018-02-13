@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
-#include "Tank.h"
 #include "TankAIController.generated.h"
 
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
@@ -15,11 +15,17 @@ class BATTLETANK_API ATankAIController : public AAIController
 protected:
 	UPROPERTY(BlueprintReadOnly)
 		UTankAimingComponent* tankAimingComponent = nullptr;
+	
+
 
 private:
+	float acceptanceRadius = 8000;
+
 	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 
-	float acceptanceRadius = 8000;
+	virtual void SetPawn(APawn* InPawn) override;
 
+	UFUNCTION()
+		void OnPossedTankDeath();
 };

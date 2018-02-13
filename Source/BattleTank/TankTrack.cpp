@@ -15,7 +15,6 @@ void UTankTrack::BeginPlay() {
 }
 
 void UTankTrack::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector normalImpulse, const FHitResult& hit) {
-	//UE_LOG(LogTemp, Warning, TEXT("hit!!!"));
 	//update tank position
 	DriveTank();
 	//correct tank movement
@@ -26,7 +25,6 @@ void UTankTrack::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UP
 
 void UTankTrack::SetThrottle(float throttle) {
 	currentThrottle = FMath::Clamp<float>(currentThrottle + throttle, -1.f, 1.f);
-//	UE_LOG(LogTemp, Warning, TEXT("currentthrotlñe: %f"), currentThrottle);
 }
 
 void UTankTrack::DriveTank() {

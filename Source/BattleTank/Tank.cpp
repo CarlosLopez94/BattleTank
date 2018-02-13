@@ -18,6 +18,7 @@ float ATank::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AC
 	//Check if tank stills alive
 	if (currentHealth <= 0) {
 		UE_LOG(LogTemp, Warning, TEXT("tank %s has died :("),*GetName());
+		OnDeath.Broadcast();
 	}
 	return damageToApply;
 }

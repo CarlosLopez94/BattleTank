@@ -12,6 +12,8 @@ class UTankAimingComponent;
 class UTankTurret;
 class AProjectile;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -24,6 +26,8 @@ public:
 	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	UFUNCTION(BluEprintPure, Category = "Health")
 	float GetHealthPercentage() const;
+
+	FTankDelegate OnDeath;
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")

@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
+#include "Tank.h"
 #include "Public/DrawDebugHelpers.h"
 #include "TankAimingComponent.h"
 
@@ -12,6 +13,18 @@ void ATankPlayerController::BeginPlay() {
 		tankAimingComponent = controlledTank->FindComponentByClass<UTankAimingComponent>();
 		if (ensure(tankAimingComponent)) {
 			FoundAimingComponent(tankAimingComponent);
+		}
+	}
+}
+
+//It has to be on this method, if we do this on beginPlay it wont work sometimes and in the contructor is too early
+void ATankPlayerController::SetPawn(APawn* InPawn) {
+	Super::SetPawn(InPawn);
+	if (InPawn != nullptr) {
+		auto controlledTank = Cast<ATank>(InPawn);
+		if (ensure(controlledTank)) {
+			//subscribe
+			controlledTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossedTankDeath);
 		}
 	}
 }
@@ -66,7 +79,6 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 	);
 }
 
-/**/
 bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHitResult& hitResult) const {
 	///Get the location of the Camera
 	FVector cameraLocation = PlayerCameraManager->GetCameraLocation(); //"GetPlayerViewPoint" can be used too
@@ -86,3 +98,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector lookDirection, FHit
 	return result;
 }
 
+void ATankPlayerController::OnPossedTankDeath() {
+	UE_LOG(LogTemp, Warning, TEXT("tank has die. Received on player controlled"));
+}
